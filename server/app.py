@@ -9,6 +9,12 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 import db_services
 from session_management import * 
 
+@app.route('/', methods={'GET', 'POST'})
+def welcome():
+
+    result = {'success': 0, 'message':'hello'}
+    
+    return jsonify(result)
 
 @app.route('/sign_up_user', methods={'POST'})
 def sign_up_user():
@@ -25,7 +31,7 @@ def sign_up_user():
     
     return jsonify(result)
 
-@app.route('/login', methods={'POST'})
+@app.route('/login', methods={'POST', 'GET'})
 def login():
 
     """
@@ -80,6 +86,16 @@ def profile():
         result = db_services.profile(user_id = current_user)
     
     return jsonify(result)
+
+@app.route('/about', methods={'POST'})
+def about():
+
+    """
+    about page of service
+    """
+
+    return render_template("display.html", account=account)
+
 
 @app.route('/sales_stats', methods={'POST'})
 def sales_stats():
